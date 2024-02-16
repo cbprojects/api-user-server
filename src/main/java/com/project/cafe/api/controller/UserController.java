@@ -6,30 +6,32 @@ import com.project.cafe.api.exception.imp.ModelNotFoundException;
 import com.project.cafe.api.service.IUserService;
 import com.project.cafe.api.util.ConstantsMessages;
 import com.project.cafe.api.util.Util;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-  @Value("${rest.request.header}")
-  private String REQUEST_HEADER;
+  @Value("${rest.request.header.key}")
+  private String REQUEST_HEADER_KEY;
 
   @Value("${rest.request.header.version}")
   private String REQUEST_HEADER_VERSION;
 
-  private IUserService userService;
+  private final IUserService userService;
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<StandardResponseDTO> find() {
@@ -43,27 +45,13 @@ public class UserController {
     }
   }
 
-  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<StandardResponseDTO> findByName(
-    @RequestParam String name
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<StandardResponseDTO> findById(
+    @PathVariable("id") long id
   ) {
     try {
       return new ResponseEntity<>(
-        new StandardResponseDTO(userService.findByName(name)),
-        HttpStatus.OK
-      );
-    } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
-    }
-  }
-
-  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<StandardResponseDTO> findByMail(
-    @RequestParam String mail
-  ) {
-    try {
-      return new ResponseEntity<>(
-        new StandardResponseDTO(userService.findByMail(mail)),
+        new StandardResponseDTO(userService.findById(id)),
         HttpStatus.OK
       );
     } catch (Exception e) {

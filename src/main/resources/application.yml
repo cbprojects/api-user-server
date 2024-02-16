@@ -3,7 +3,8 @@ banner:
 
 rest:
   request:
-    header: API_USER_SERVER
+    header:
+      key: API_USER_SERVER
       version: 1.0.0
 
 server:

@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface IUserService {
   public List<UserDTO> find();
 
+  public UserDTO findById(long id);
+
   public Optional<UserDTO> findByName(String name);
 
   public Optional<UserDTO> findByMail(String mail);
