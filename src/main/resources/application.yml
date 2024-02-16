@@ -1,6 +1,11 @@
 banner:
   location: banner.txt
 
+rest:
+  request:
+    header: API_USER_SERVER
+      version: 1.0.0
+
 server:
   port: 8443
   servlet:

@@ -26,6 +26,9 @@ public class UserController {
   @Value("${rest.request.header}")
   private String REQUEST_HEADER;
 
+  @Value("${rest.request.header.version}")
+  private String REQUEST_HEADER_VERSION;
+
   private IUserService userService;
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)

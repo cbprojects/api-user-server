@@ -7,10 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @MappedSuperclass
 @Getter
@@ -29,7 +28,7 @@ public class BaseEntityTB {
 
   @NotNull
   @Column(name = "create_date", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private LocalDateTime createDate;
 
   @NotNull
@@ -37,7 +36,7 @@ public class BaseEntityTB {
   private String createUser;
 
   @Column(name = "update_date", nullable = false)
-  @Temporal(TemporalType.TIMESTAMP)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private LocalDateTime updateDate;
 
   @NotNull
