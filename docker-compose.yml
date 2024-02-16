@@ -1,0 +1,44 @@
+version: "3.9"
+
+volumes:
+  postgres_data:
+    driver: local
+  mongo_data:
+services:
+  postgres:
+    image: postgres:11
+    container_name: api-user-bd
+    restart: always
+    logging:
+      options:
+        max-size: 1g
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: cbaene-bd
+      POSTGRES_USER: admin-cb
+      POSTGRES_PASSWORD: Solracm.2023*_
+    ports:
+      - 5403:5432
+    networks:
+      network:
+        ipv4_address: 21.5.0.3
+  api-user-server:
+    container_name: api-user-server
+    env_file: ./.env
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: api-user-server:latest
+    ports:
+      - 8403:8443
+    networks:
+      network:
+        ipv4_address: 21.5.0.2
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 21.5.0.0/16
+          gateway: 21.5.0.1
