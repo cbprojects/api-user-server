@@ -1,21 +1,21 @@
 package com.project.cafe.api.dao;
 
-import com.project.cafe.api.model.UserTB;
+import com.project.cafe.api.model.UserEntity;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 public interface IUserDao {
-  public List<UserTB> find();
+  public List<UserEntity> find();
 
-  public UserTB findById(Long id);
+  public UserEntity findById(Long id);
 
-  public Optional<UserTB> findByName(String name);
+  public Optional<UserEntity> findByName(String name);
 
-  public Optional<UserTB> findByMail(String mail);
+  public Optional<UserEntity> findByMail(String mail);
 
-  public UserTB createUser(UserTB user);
+  public UserEntity createUser(UserEntity user);
 
-  public UserTB updateUser(UserTB user);
+  public UserEntity updateUser(UserEntity user);
 }

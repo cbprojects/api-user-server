@@ -1,4 +1,4 @@
-package com.project.cafe.api.dto;
+package com.project.cafe.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

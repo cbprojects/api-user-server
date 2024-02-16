@@ -1,6 +1,6 @@
 package com.project.cafe.api.model;
 
-import com.project.cafe.api.util.ConstantsTableNames;
+import com.project.cafe.api.helper.constant.ConstantsTableNames;
 import com.sun.istack.NotNull;
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = ConstantsTableNames.USER_TB)
-public class UserTB extends BaseEntityTB implements Serializable {
+public class UserEntity extends BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

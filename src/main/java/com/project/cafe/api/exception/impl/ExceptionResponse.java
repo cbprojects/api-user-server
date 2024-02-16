@@ -1,4 +1,4 @@
-package com.project.cafe.api.exception.imp;
+package com.project.cafe.api.exception.impl;
 
 import java.util.Date;
 import lombok.Getter;

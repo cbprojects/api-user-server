@@ -1,4 +1,4 @@
-package com.project.cafe.api.util;
+package com.project.cafe.api.helper.constant;
 
 public final class ConstantsTableNames {
 

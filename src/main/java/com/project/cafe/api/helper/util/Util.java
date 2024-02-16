@@ -1,6 +1,10 @@
-package com.project.cafe.api.util;
+package com.project.cafe.api.helper.util;
 
-import com.project.cafe.api.model.UserTB;
+import com.project.cafe.api.helper.constant.ConstantsFields;
+import com.project.cafe.api.helper.constant.ConstantsMessages;
+import com.project.cafe.api.helper.constant.ConstantsTableNames;
+import com.project.cafe.api.helper.constant.ConstantsValidations;
+import com.project.cafe.api.model.UserEntity;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +38,7 @@ public class Util {
     if (!StringUtils.isBlank(tabla)) {
       switch (tabla) {
         case ConstantsTableNames.USER_TB:
-          errores = validarUsuario((UserTB) entidadTB);
+          errores = validarUsuario((UserEntity) entidadTB);
           break;
       }
     } else {
@@ -44,7 +48,7 @@ public class Util {
     return errores;
   }
 
-  public static List<String> validarUsuario(UserTB user) {
+  public static List<String> validarUsuario(UserEntity user) {
     List<String> errores = new ArrayList<>();
 
     if (StringUtils.isBlank(user.getName())) {

@@ -1,11 +1,11 @@
 package com.project.cafe.api.controller;
 
-import com.project.cafe.api.dto.StandardResponseDTO;
-import com.project.cafe.api.dto.UserDTO;
-import com.project.cafe.api.exception.imp.ModelNotFoundException;
+import com.project.cafe.api.exception.impl.ModelException;
+import com.project.cafe.api.helper.constant.ConstantsMessages;
+import com.project.cafe.api.helper.util.Util;
+import com.project.cafe.api.model.dto.StandardResponseDTO;
+import com.project.cafe.api.model.dto.UserDTO;
 import com.project.cafe.api.service.IUserService;
-import com.project.cafe.api.util.ConstantsMessages;
-import com.project.cafe.api.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,28 +34,28 @@ public class UserController {
   private final IUserService userService;
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<StandardResponseDTO> find() {
+  public ResponseEntity<StandardResponseDTO> find() throws ModelException {
     try {
       return new ResponseEntity<>(
         new StandardResponseDTO(userService.find()),
         HttpStatus.OK
       );
     } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
+      throw new ModelException(e.getMessage());
     }
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<StandardResponseDTO> findById(
     @PathVariable("id") long id
-  ) {
+  ) throws ModelException {
     try {
       return new ResponseEntity<>(
         new StandardResponseDTO(userService.findById(id)),
         HttpStatus.OK
       );
     } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
+      throw new ModelException(e.getMessage());
     }
   }
 
@@ -66,7 +66,7 @@ public class UserController {
   )
   public ResponseEntity<StandardResponseDTO> login(
     @RequestBody UserDTO request
-  ) {
+  ) throws ModelException {
     try {
       UserDTO authUser = null;
       if (
@@ -76,12 +76,12 @@ public class UserController {
       ) {
         authUser = userService.login(request.getMail(), request.getPassword());
         if (authUser == null) {
-          throw new ModelNotFoundException(
+          throw new ModelException(
             ConstantsMessages.ERROR_LOGIN_INACTIVE_OR_BAD_REQUEST
           );
         }
       } else {
-        throw new ModelNotFoundException(ConstantsMessages.ERROR_NO_DATA);
+        throw new ModelException(ConstantsMessages.ERROR_NO_DATA);
       }
 
       return new ResponseEntity<>(
@@ -89,7 +89,7 @@ public class UserController {
         HttpStatus.OK
       );
     } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
+      throw new ModelException(e.getMessage());
     }
   }
 
@@ -100,14 +100,14 @@ public class UserController {
   )
   public ResponseEntity<StandardResponseDTO> encriptPassword(
     @RequestBody UserDTO request
-  ) {
+  ) throws ModelException {
     try {
       UserDTO userCrypt = null;
       if (request != null && !StringUtils.isBlank(request.getPassword())) {
         userCrypt = new UserDTO();
         userCrypt.setPassword(Util.encriptarPassword(request.getPassword()));
       } else {
-        throw new ModelNotFoundException(ConstantsMessages.ERROR_NO_DATA);
+        throw new ModelException(ConstantsMessages.ERROR_NO_DATA);
       }
 
       return new ResponseEntity<>(
@@ -115,7 +115,7 @@ public class UserController {
         HttpStatus.OK
       );
     } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
+      throw new ModelException(e.getMessage());
     }
   }
 
@@ -126,14 +126,14 @@ public class UserController {
   )
   public ResponseEntity<StandardResponseDTO> createUser(
     @RequestBody UserDTO request
-  ) {
+  ) throws ModelException {
     try {
       return new ResponseEntity<>(
         new StandardResponseDTO(userService.createUser(request)),
         HttpStatus.OK
       );
     } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
+      throw new ModelException(e.getMessage());
     }
   }
 
@@ -144,14 +144,14 @@ public class UserController {
   )
   public ResponseEntity<StandardResponseDTO> updateUser(
     @RequestBody UserDTO request
-  ) {
+  ) throws ModelException {
     try {
       return new ResponseEntity<>(
         new StandardResponseDTO(userService.updateUser(request)),
         HttpStatus.OK
       );
     } catch (Exception e) {
-      throw new ModelNotFoundException(e.getMessage());
+      throw new ModelException(e.getMessage());
     }
   }
 }

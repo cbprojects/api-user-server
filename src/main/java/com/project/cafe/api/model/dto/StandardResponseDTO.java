@@ -1,4 +1,4 @@
-package com.project.cafe.api.dto;
+package com.project.cafe.api.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;

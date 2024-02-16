@@ -1,5 +1,6 @@
-package com.project.cafe.api.dto;
+package com.project.cafe.api.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,4 +13,9 @@ public class UserDTO extends BaseDTO {
   private String mail;
   private String password;
   private boolean receiveNewsletter;
+
+  @JsonIgnore
+  public String getFullName() {
+    return this.name + this.lastName;
+  }
 }

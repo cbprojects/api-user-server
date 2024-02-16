@@ -1,4 +1,4 @@
-package com.project.cafe.api.enums;
+package com.project.cafe.api.model.enums;
 
 public enum EYesNo {
   NO("NO"),

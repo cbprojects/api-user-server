@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @MappedSuperclass
 @Getter
 @Setter
-public class BaseEntityTB {
+public class BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

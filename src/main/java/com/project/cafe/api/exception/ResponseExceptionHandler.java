@@ -1,8 +1,9 @@
 package com.project.cafe.api.exception;
 
-import com.project.cafe.api.exception.imp.ExceptionResponse;
-import com.project.cafe.api.exception.imp.ModelNotFoundException;
-import com.project.cafe.api.util.ConstantsMessages;
+import com.project.cafe.api.exception.impl.ApiClientException;
+import com.project.cafe.api.exception.impl.ExceptionResponse;
+import com.project.cafe.api.exception.impl.ModelException;
+import com.project.cafe.api.helper.constant.ConstantsMessages;
 import java.util.Date;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(Exception.class)
-  public final ResponseEntity<Object> manejarTodasExcepciones(
+  public final ResponseEntity<Object> handleAllException(
     Exception ex,
     WebRequest request
   ) {
@@ -42,9 +43,9 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     );
   }
 
-  @ExceptionHandler(ModelNotFoundException.class)
-  public final ResponseEntity<Object> manejarModeloExcepciones(
-    ModelNotFoundException ex,
+  @ExceptionHandler(ModelException.class)
+  public final ResponseEntity<Object> handleModelException(
+    ModelException ex,
     WebRequest request
   ) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(
@@ -53,7 +54,27 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
       request.getDescription(false)
     );
 
-    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(
+      exceptionResponse,
+      HttpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
+
+  @ExceptionHandler(ApiClientException.class)
+  public final ResponseEntity<Object> handleApiClientException(
+    ApiClientException ex,
+    WebRequest request
+  ) {
+    ExceptionResponse exceptionResponse = new ExceptionResponse(
+      new Date(),
+      ex.getMessage(),
+      request.getDescription(false)
+    );
+
+    return new ResponseEntity<>(
+      exceptionResponse,
+      HttpStatus.INTERNAL_SERVER_ERROR
+    );
   }
 
   @Override
