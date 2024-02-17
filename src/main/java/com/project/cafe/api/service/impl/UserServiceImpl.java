@@ -137,6 +137,7 @@ public class UserServiceImpl implements IUserService {
 
       if (passwordVerificada && userFound.get().isActive()) {
         authUser = mapper.toDTO(userFound.get());
+        authUser.setPassword(null);
       }
     }
 
