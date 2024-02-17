@@ -4,7 +4,7 @@ import com.project.cafe.api.helper.constant.ConstantsFields;
 import com.project.cafe.api.helper.constant.ConstantsMessages;
 import com.project.cafe.api.helper.constant.ConstantsTableNames;
 import com.project.cafe.api.helper.constant.ConstantsValidations;
-import com.project.cafe.api.model.UserEntity;
+import com.project.cafe.api.model.dto.UserDTO;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class Util {
     if (!StringUtils.isBlank(tabla)) {
       switch (tabla) {
         case ConstantsTableNames.USER_TB:
-          errores = validarUsuario((UserEntity) entidadTB);
+          errores = validarUsuario((UserDTO) entidadTB);
           break;
       }
     } else {
@@ -48,7 +48,7 @@ public class Util {
     return errores;
   }
 
-  public static List<String> validarUsuario(UserEntity user) {
+  public static List<String> validarUsuario(UserDTO user) {
     List<String> errores = new ArrayList<>();
 
     if (StringUtils.isBlank(user.getName())) {

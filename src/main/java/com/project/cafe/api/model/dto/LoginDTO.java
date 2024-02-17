@@ -1,7 +1,7 @@
 package com.project.cafe.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,13 +10,10 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ErrorDTO {
+public class LoginDTO implements Serializable {
 
-  @JsonProperty(value = "class")
-  private String clazz;
+  private static final long serialVersionUID = 1L;
 
-  private String method;
-  private String line;
-  private String message;
-  private String details;
+  private String mail;
+  private String password;
 }

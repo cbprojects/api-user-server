@@ -21,6 +21,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger
+
 config:
   swagger:
     title: API (api-user)
@@ -33,6 +34,7 @@ config:
       name: API USER
       url: https://api-user.cbaeneprojects.com/
       email: cmverab@ufpso.edu.co
+
 spring:
   jpa:
     database: POSTGRESQL

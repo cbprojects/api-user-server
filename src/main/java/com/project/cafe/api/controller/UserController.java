@@ -3,6 +3,7 @@ package com.project.cafe.api.controller;
 import com.project.cafe.api.exception.impl.ModelException;
 import com.project.cafe.api.helper.constant.ConstantsMessages;
 import com.project.cafe.api.helper.util.Util;
+import com.project.cafe.api.model.dto.LoginDTO;
 import com.project.cafe.api.model.dto.StandardResponseDTO;
 import com.project.cafe.api.model.dto.UserDTO;
 import com.project.cafe.api.service.IUserService;
@@ -65,7 +66,7 @@ public class UserController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<StandardResponseDTO> login(
-    @RequestBody UserDTO request
+    @RequestBody LoginDTO request
   ) throws ModelException {
     try {
       UserDTO authUser = null;
@@ -99,12 +100,12 @@ public class UserController {
     produces = MediaType.APPLICATION_JSON_VALUE
   )
   public ResponseEntity<StandardResponseDTO> encriptPassword(
-    @RequestBody UserDTO request
+    @RequestBody LoginDTO request
   ) throws ModelException {
     try {
-      UserDTO userCrypt = null;
+      LoginDTO userCrypt = null;
       if (request != null && !StringUtils.isBlank(request.getPassword())) {
-        userCrypt = new UserDTO();
+        userCrypt = new LoginDTO();
         userCrypt.setPassword(Util.encriptarPassword(request.getPassword()));
       } else {
         throw new ModelException(ConstantsMessages.ERROR_NO_DATA);

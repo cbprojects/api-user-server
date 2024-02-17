@@ -33,7 +33,9 @@ public class UserServiceImpl implements IUserService {
 
   @Override
   public UserDTO findById(long id) {
-    return mapper.toDTO(userRepository.findById(id).get());
+    Optional<UserEntity> opt = userRepository.findById(id);
+
+    return mapper.toDTO(opt.isPresent() ? opt.get() : null);
   }
 
   @Override
@@ -73,7 +75,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     UserEntity entity = mapper.toEntity(user);
+    entity.setPassword(Util.encriptarPassword(user.getPassword()));
     setDefaultValues(entity, ConstantsValidations.PHASE_CREATE);
+
     return mapper.toDTO(userRepository.save(entity));
   }
 
@@ -96,7 +100,8 @@ public class UserServiceImpl implements IUserService {
     Optional<UserEntity> userFound = userRepository.findByMail(user.getMail());
     if (
       userFound.isPresent() &&
-      userFound.get().getId() != userFoundById.get().getId()
+      userFound.get().getId().longValue() !=
+      userFoundById.get().getId().longValue()
     ) {
       throw new ModelException(
         ConstantsMessages.ERROR_USER_ALREADY_EXIST_BY_MAIL
@@ -104,8 +109,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     UserEntity entity = mapper.toEntity(user);
-    setDefaultValues(entity, ConstantsValidations.PHASE_UPDATE);
+    entity.setCreateDate(userFoundById.get().getCreateDate());
+    entity.setCreateUser(userFoundById.get().getCreateUser());
+    entity.setActive(userFoundById.get().isActive());
     entity.setPassword(Util.encriptarPassword(user.getPassword()));
+    setDefaultValues(entity, ConstantsValidations.PHASE_UPDATE);
+
     return mapper.toDTO(userRepository.save(entity));
   }
 
